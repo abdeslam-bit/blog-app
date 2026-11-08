@@ -160,7 +160,7 @@ All backend endpoints are prefixed with `/api/v1`:
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
 | `GET` | `/api/v1/tags` | Public | List all tags with published post count |
-| `POST` | `/api/v1/tags` | Authenticated / Public | Batch create new tags |
+| `POST` | `/api/v1/tags` | Authenticated | Batch create new tags |
 | `DELETE` | `/api/v1/tags/{id}` | Authenticated | Delete tag (blocked if posts exist) |
 
 ---
@@ -179,6 +179,7 @@ All backend endpoints are prefixed with `/api/v1`:
 | `SECURITY_LOG_LEVEL` | Spring Security log level | `INFO` |
 | `JWT_SECRET` | Base64-encoded secret key for JWT signing | *(Preconfigured default key for dev)* |
 | `JWT_EXPIRATION` | Token validity in milliseconds | `86400000` (24 hours) |
+| `CORS_ALLOWED_ORIGINS` | Permitted frontend origins for CORS | `http://localhost:5173,http://localhost:3000,http://localhost` |
 | `FRONTEND_PORT` | Port for the web client | `5173` |
 | `BACKEND_PORT` | Port for the API server | `8080` |
 

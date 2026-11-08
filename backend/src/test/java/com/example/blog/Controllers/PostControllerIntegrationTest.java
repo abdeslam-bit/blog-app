@@ -236,4 +236,49 @@ public class PostControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is("Science and Tech")));
     }
+
+    @Test
+    void testCreateTagRequiresAuth() throws Exception {
+        String tagPayload = """
+            {
+                "names": ["docker", "security"]
+            }
+        """;
+
+        mockMvc.perform(post("/api/v1/tags")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(tagPayload))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void testCreateCategoryRequiresAuth() throws Exception {
+        String categoryPayload = """
+            {
+                "name": "Unauthorized Category"
+            }
+        """;
+
+        mockMvc.perform(post("/api/v1/categories")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(categoryPayload))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void testCorsFromAllowedFrontendOrigin() throws Exception {
+        mockMvc.perform(options("/api/v1/posts")
+                .header("Origin", "http://localhost:5173")
+                .header("Access-Control-Request-Method", "GET"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Access-Control-Allow-Origin", "http://localhost:5173"));
+    }
+
+    @Test
+    void testCorsFromDisallowedOriginIsRejected() throws Exception {
+        mockMvc.perform(options("/api/v1/posts")
+                .header("Origin", "http://malicious-website.com")
+                .header("Access-Control-Request-Method", "GET"))
+                .andExpect(status().isForbidden());
+    }
 }
