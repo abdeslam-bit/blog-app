@@ -1,0 +1,13 @@
+**/.git
+**/.gitignore
+**/.vscode
+**/.idea
+**/node_modules
+**/dist
+**/target
+**/*.log
+**/.DS_Store
+.env
+.env.local
+postgres_data/
+README.md
